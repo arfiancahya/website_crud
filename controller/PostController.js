@@ -103,9 +103,32 @@ const deletePost = async (req, res) => {
     }
 };
 
+const deleteAllPost = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const Post = await pos.destroy({
+            where: {
+
+            }
+        });
+
+        res.status(200).send({
+            status: 200,
+            message: "Terhapus Semua",
+            data: Post
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "gagal"
+        });
+    }
+};
+
 module.exports = {
     getAllPost,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    deleteAllPost
 };
