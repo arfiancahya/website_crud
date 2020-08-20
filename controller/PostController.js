@@ -1,10 +1,10 @@
 const express = require("express");
-const model = require("../models");
-const Po = model.posts;
-const Op = model.Sequelize.Op;
+const models = require("../models");
+const pos = models.Post;
+
 
 const getAllPost = async (req, res) => {
-    const Post = await Po.findAll({});
+    const Post = await pos.findAll({});
     res.status(200).send({
         status: 200,
         message: "Berhasil get data post",
@@ -22,14 +22,16 @@ const createPost = async (req, res) => {
             return;
         }
 
-        const post = {
-            title: req.body.title,
-            description: req.body.description,
-            published: req.body.published ? req.body.published : false
-        };
+        const {
+            title,
+            description,
+            publish
+        } = req.body;
 
-        const Post = await Po.create({
-            post
+        const Post = await pos.create({
+            title,
+            description,
+            publish
         });
 
         res.status(200).send({
@@ -46,7 +48,40 @@ const createPost = async (req, res) => {
 
 };
 
+const updatePost = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const {
+            title,
+            description,
+            publish
+        } = req.body;
+        const Post = await pos.update({
+            title,
+            description,
+            publish,
+        }, {
+            where: {
+                id: id,
+            },
+        });
+
+        res.status(200).send({
+            status: 200,
+            message: "Update Berhasi",
+            data: Post
+        });
+
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "Error membuat post"
+        });
+    }
+};
+
 module.exports = {
     getAllPost,
-    createPost
+    createPost,
+    updatePost
 };
