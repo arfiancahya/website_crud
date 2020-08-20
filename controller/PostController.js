@@ -1,5 +1,6 @@
 const express = require("express");
 const models = require("../models");
+const post = require("../models/post");
 const pos = models.Post;
 
 
@@ -80,8 +81,31 @@ const updatePost = async (req, res) => {
     }
 };
 
+const deletePost = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const Post = await pos.destroy({
+            where: {
+                id: id,
+            }
+        });
+
+        res.status(200).send({
+            status: 200,
+            message: "Terhapus",
+            data: Post
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "gagal"
+        });
+    }
+};
+
 module.exports = {
     getAllPost,
     createPost,
-    updatePost
+    updatePost,
+    deletePost
 };
