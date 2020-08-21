@@ -113,8 +113,20 @@ const loginUser = async (req, res) => {
     }
 };
 
+const getSingleUser = async (req, res) => {
+    const user = await User.findOne({
+        id: req.id
+    });
+
+    return res.status(200).send({
+        status: 200,
+        message: "Berhasil",
+        data: user
+    });
+};
 
 module.exports = {
     daftarUser,
-    loginUser
+    loginUser,
+    getSingleUser
 };
