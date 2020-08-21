@@ -7,16 +7,15 @@ const Op = Username.Sequelize.Op;
 const daftarUser = async (req, res) => {
     try {
 
-
         const {
             username,
             email,
             password
         } = req.body;
 
-        const data = await User.findAll({
+        const data = await User.findOne({
             where: {
-                [Op.and]: [{
+                [Op.or]: [{
                         username: username
                     },
                     {
@@ -26,20 +25,13 @@ const daftarUser = async (req, res) => {
             }
         });
 
-        if (data) {
-            res.status(500).send({
-                status: 500,
-                message: "usernam dan email ssudah ada"
-            });
+        if (!data) {
 
-        } else {
             const hashPassword = await bcrypt.hash(password, 10);
             const user = await User.create({
                 username: username,
                 email: email,
                 password: hashPassword,
-
-
             });
 
             return res.status(201).send({
@@ -47,6 +39,14 @@ const daftarUser = async (req, res) => {
                 message: "User Berhasil Dibuat",
                 data: user,
             });
+
+
+        } else {
+            res.status(500).send({
+                status: 500,
+                message: "username dan email sudah ada"
+            });
+
         }
 
     } catch (error) {
