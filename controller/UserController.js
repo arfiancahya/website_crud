@@ -107,6 +107,8 @@ const loginUser = async (req, res) => {
         });
     }
 };
+
+
 module.exports = {
     daftarUser,
     loginUser
