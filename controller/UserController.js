@@ -1,8 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jsonwebtoken = require("jsonwebtoken");
 const Username = require("../models");
 const User = Username.User;
 const Op = Username.Sequelize.Op;
+require("dotenv").config();
+const secret = process.env.JWT_SECRET = "secret";
 
 const daftarUser = async (req, res) => {
     try {
@@ -57,6 +60,54 @@ const daftarUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    try {
+        const {
+            username,
+            password
+        } = req.body;
+
+        const dataUser = await User.findOne({
+            where: {
+                [Op.or]: [{
+                        username: username
+                    },
+                    {
+                        email: username
+                    }
+                ]
+            }
+        });
+
+        if (dataUser) {
+            const passwordUser = await bcrypt.compare(password, dataUser.password);
+            if (passwordUser) {
+                const data = {
+                    id: dataUser.id
+                };
+
+                const token = await jsonwebtoken.sign(data, secret);
+
+                return res.status(200).send({
+                    status: 200,
+                    message: "Selamat datang",
+                    token: token
+                });
+            } else {
+                res.status(500).send({
+                    status: 500,
+                    message: "Username atau Password anda salah"
+                });
+            }
+        }
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "Sayang Sekali anda tidak bisa login"
+        });
+    }
+};
 module.exports = {
-    daftarUser
+    daftarUser,
+    loginUser
 };
