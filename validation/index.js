@@ -26,8 +26,13 @@ const validationDaftar = [
     }).withMessage("Password harus 6 character")
 ]
 
+const validationLogin = [
+    check("username", "Username tidak boleh kosong").notEmpty(),
+    check("password", "password tidak boleh kosong").notEmpty()
+]
 
 module.exports = {
     runValidation,
-    validationDaftar
+    validationDaftar,
+    validationLogin
 }
