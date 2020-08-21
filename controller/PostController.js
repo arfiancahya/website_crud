@@ -1,6 +1,5 @@
 const express = require("express");
 const models = require("../models");
-const post = require("../models/post");
 const pos = models.Post;
 
 
