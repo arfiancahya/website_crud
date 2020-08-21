@@ -6,6 +6,7 @@ const User = Username.User;
 const Op = Username.Sequelize.Op;
 require("dotenv").config();
 const secret = process.env.JWT_SECRET = "secret";
+const client = process.env.CLIENT_URL = "http://localhost:5001";
 
 const daftarUser = async (req, res) => {
     try {
@@ -125,8 +126,44 @@ const getSingleUser = async (req, res) => {
     });
 };
 
+const forgetPassword = async (req, res) => {
+    const {
+        emal
+    } = req.body;
+
+    const user = await User.findOne({
+        email: email
+    });
+    if (!user) {
+        return res.status(500).send({
+            status: 500,
+            message: "Email tak tersedia"
+        });
+    }
+
+    const token = jsonwebtoken.sign({
+        id: user.id
+    }, secret);
+
+    await User.updateOne({
+        resetPassword: token
+    });
+
+    const templateEmail = {
+        from: "Arfian Cahya",
+        to: email,
+        subject: "Link Reset Password",
+        html: `<p>Silakan klik link dibawah ini untuk reset password anda</p><p>${client}/resetpassword/${token}</p>`
+    };
+
+    return res.status(200).send({
+        message: req.body.email
+    });
+};
+
 module.exports = {
     daftarUser,
     loginUser,
-    getSingleUser
+    getSingleUser,
+    forgetPassword
 };
