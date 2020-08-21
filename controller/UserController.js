@@ -94,12 +94,17 @@ const loginUser = async (req, res) => {
                     token: token
                 });
             } else {
-                res.status(500).send({
+                return res.status(500).send({
                     status: 500,
-                    message: "Username atau Password anda salah"
+                    message: "Password anda salah"
                 });
             }
         }
+        return res.status(500).send({
+            status: 500,
+            message: "Username dan email anda salah"
+        });
+
     } catch (error) {
         res.status(500).send({
             status: 500,
