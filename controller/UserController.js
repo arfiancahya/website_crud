@@ -2,11 +2,14 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const Username = require("../models");
+const {
+    kirimEmail
+} = require("../helpers");
 const User = Username.User;
 const Op = Username.Sequelize.Op;
 require("dotenv").config();
 const secret = process.env.JWT_SECRET = "secret";
-const client = process.env.CLIENT_URL = "http://localhost:5001";
+const client = process.env.CLIENT_URL = "http://localhost:3000";
 
 const daftarUser = async (req, res) => {
     try {
@@ -127,38 +130,57 @@ const getSingleUser = async (req, res) => {
 };
 
 const forgetPassword = async (req, res) => {
-    const {
-        emal
-    } = req.body;
+    try {
+        const {
+            email
+        } = req.body;
 
-    const user = await User.findOne({
-        email: email
-    });
-    if (!user) {
-        return res.status(500).send({
+        const user = await User.findOne({
+            where: {
+                email: email
+            }
+
+        });
+
+        if (!user) {
+            return res.status(500).send({
+                status: 500,
+                message: "Email tak tersedia"
+            });
+        }
+
+        const token = await jsonwebtoken.sign({
+            id: user.id
+        }, secret);
+
+        const pass = await User.update({
+            resetPassword: token
+        }, {
+            where: {
+                id: user.id
+            }
+        });
+
+
+        const templateEmail = {
+            from: "Arfian Cahya",
+            to: email,
+            subject: "Link Reset Password",
+            html: `<p>Silakan klik link dibawah ini untuk reset password anda</p><p>${client}/resetpassword/${token}</p>`
+        };
+
+        kirimEmail(templateEmail)
+        return res.status(200).send({
+            status: 200,
+            message: "Link Berhasil Terkirim"
+        });
+    } catch (error) {
+        res.status(500).send({
             status: 500,
-            message: "Email tak tersedia"
+            message: "Sayang Sekali anda tidak bisa login"
         });
     }
 
-    const token = jsonwebtoken.sign({
-        id: user.id
-    }, secret);
-
-    await User.updateOne({
-        resetPassword: token
-    });
-
-    const templateEmail = {
-        from: "Arfian Cahya",
-        to: email,
-        subject: "Link Reset Password",
-        html: `<p>Silakan klik link dibawah ini untuk reset password anda</p><p>${client}/resetpassword/${token}</p>`
-    };
-
-    return res.status(200).send({
-        message: req.body.email
-    });
 };
 
 module.exports = {
