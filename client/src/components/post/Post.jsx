@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
 
 const Post = (props) => {
     return (
-        <div className = "post">
-            <div className= "foto">
-                <h1>Hallo</h1>
-            </div>
+        <Fragment>
+            <div className="post">
+            <table>
+                <tbody>
+                    <tr> 
+                        <td>{props.data.title}</td>
+                        <td>{props.data.description}</td>
+                    </tr>
+                </tbody>
+            </table> 
 
-            <div className="konten">
-                <p className="title"> {props.title} </p>
-                <p className="body" > {props.body} </p>
+            <button className="remove" onClick={() => props.remove(props.data.id)}>Edit</button>
             </div>
-            
-        </div>
+        </Fragment>
     );
 }
 
