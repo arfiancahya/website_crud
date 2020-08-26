@@ -9,6 +9,7 @@ const Table = () => {
                         <th>Title</th>
                         <th>Description</th>
                         <th>Authors</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
             </table>

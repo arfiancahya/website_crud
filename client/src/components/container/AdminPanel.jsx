@@ -1,20 +1,40 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import Post from "../post/Post";
+import Pages from "../post/Pages";
 import Table from '../post/Table';
+import Post from '../post/Post';
 
 class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            formPos: {
+                id: " ",
+                title: " ",
+                description: " "
+            }
         }
+    }
+
+    handleEdit = (data) => {
+        console.log(data);
     }
 
     handleRemove = (data) => {
         axios.delete(`/api/post/${data}`)
         .then((result) => {
             this.getBaru();
+        })
+    }
+
+    handleForm = (event) => {
+        let formPosNew = {...this.state.formPos};
+        formPosNew[event.target.name] = event.target.value;
+        this.setState ({
+            formPos: formPosNew
+        }, () => {
+            console.log(this.state.formPos);
         })
     }
 
@@ -36,11 +56,12 @@ class AdminPanel extends Component {
         return (
             <Fragment>
                 <h1> Hallo Semua </h1>
+                <Post form={this.handleForm} />
                 <Table />
                 {
                     this.state.posts.map(posts => {
                         
-                        return <Post key={posts.id} data={posts} remove={this.handleRemove} />
+                        return <Pages key={posts.id} data={posts} remove={this.handleRemove} edit={this.handleEdit} />
                     })
                 }
                 
