@@ -14,7 +14,7 @@ const post = (props) => {
                     <input type="text" name="title" placeholder="Add Title" onChange={props.form} />
                     <label htmlFor="description">Blog Content</label>
                     <textarea name="description" id="description" cols="50" rows="10" placeholder="Add Content" onChange={props.form} />
-                    <button className="publish">Publish</button>
+                    <button className="publish" onClick={props.publish}>Publish</button>
                 </div>
             </div>
         </Fragment>

@@ -30,12 +30,18 @@ class AdminPanel extends Component {
 
     handleForm = (event) => {
         let formPosNew = {...this.state.formPos};
+        let timestamp = new Date().getTime();
+        formPosNew["id"] = timestamp;
         formPosNew[event.target.name] = event.target.value;
         this.setState ({
             formPos: formPosNew
         }, () => {
             console.log(this.state.formPos);
         })
+    }
+
+    handlePos = () => {
+        console.log(this.state.formPos);
     }
 
     componentDidMount() {
@@ -56,7 +62,7 @@ class AdminPanel extends Component {
         return (
             <Fragment>
                 <h1> Hallo Semua </h1>
-                <Post form={this.handleForm} />
+                <Post form={this.handleForm} publish={this.handlePos} />
                 <Table />
                 {
                     this.state.posts.map(posts => {
