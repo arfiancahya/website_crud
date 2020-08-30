@@ -124,10 +124,32 @@ const deleteAllPost = async (req, res) => {
     }
 };
 
+const orderPost = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const Order = await pos.findAll({
+             order: [
+                ['id', 'DESC']
+            ],
+        });
+        res.status(200).send({
+            status: 200,
+            message: "Berhasil get data post",
+            data: Order,
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "gagal"
+        });
+    }
+};
+
 module.exports = {
     getAllPost,
     createPost,
     updatePost,
     deletePost,
-    deleteAllPost
+    deleteAllPost,
+    orderPost
 };
