@@ -12,7 +12,7 @@ const Pages = (props) => {
                         <td>{props.data.description}</td>
                         <td>Authors</td>
                         <td>
-                            <button className="edit" onClick={() => props.edit(props.data.id)}>Edit</button>
+                            <button className="edit" onClick={() => props.edit(props.data)}>Edit</button>
                             <button className="remove" onClick={() => props.remove(props.data.id)}>Remove</button>
                         </td>
                     </tr>
