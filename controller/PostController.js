@@ -145,11 +145,33 @@ const orderPost = async (req, res) => {
     }
 };
 
+const getById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const detail = await pos.findOne({
+             where: {
+                 id: id
+             }
+        });
+        res.status(200).send({
+            status: 200,
+            message: "Berhasil get data post",
+            data: detail,
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 500,
+            message: "gagal"
+        });
+    }
+};
+
 module.exports = {
     getAllPost,
     createPost,
     updatePost,
     deletePost,
     deleteAllPost,
-    orderPost
+    orderPost,
+    getById
 };
