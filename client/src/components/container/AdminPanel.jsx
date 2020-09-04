@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Pages from "../post/Pages";
 import Table from '../post/Table';
 import Post from '../post/Post';
@@ -93,23 +94,24 @@ class AdminPanel extends Component {
             //console.log(this.state.formPos);
         })
     }
-
-    
-    
-    
+   
     render() {
         return (
             <Fragment>
-                <h1> Hallo Semua </h1>
-                <Post form={this.handleForm} publish={this.handlePos} update={this.state.formPos} />
-                <Table />
-                {
-                    this.state.posts.map(posts => {
+                <Router>
+                    <Switch>
+                        <Route exact path="/form"><Post form={this.handleForm} publish={this.handlePos} update={this.state.formPos} /></Route>
+                        <Route path="/post">
+                        <Table />
+                        {
+                        this.state.posts.map(posts => {
                         
-                        return <Pages key={posts.id} data={posts} remove={this.handleRemove} edit={this.handleEdit} />
-                    })
-                }
-                
+                            return <Pages key={posts.id} data={posts} remove={this.handleRemove} edit={this.handleEdit} />
+                        })
+                        }
+                    </Route>
+                    </Switch>
+                </Router>
             </Fragment>
         );
     }
