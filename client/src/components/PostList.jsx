@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getDeletPost, getPostList } from '../actions/actionPost';
+import { getDeletPost, getPostList, searchPost } from '../actions/actionPost';
+
 
 
 class PostList extends Component {
@@ -10,8 +11,15 @@ class PostList extends Component {
         this.props.dispatch(getPostList());
     }
 
+    updateSeacrh(e) {
+        this.props.dispatch(searchPost(e.target.value));
+    }
+
     render() {
-        const postItem = this.props.posts.map(posts => {
+        let searchFilter = this.props.posts.filter((posts) => {
+            return posts.title.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
+        })
+        const postItem = searchFilter.map(posts => {
             return (
                 <div key={posts.id}>
                     <table>
@@ -22,7 +30,7 @@ class PostList extends Component {
                                 <td>{this.props.authors}</td>
                                 <td>
                                     <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
-                                    <button type="button" className="remove" onClick= {() => this.handleClick(posts.id)}>Remove</button>
+                                    <button type="button" className="remove" onClick={() => this.handleClick(posts.id)}>Remove</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -32,6 +40,20 @@ class PostList extends Component {
         });
         return (
             <Fragment>
+                <div>
+                    <input type="search" name="search" placeholder="Search Post in Here ...." onChange={(e) => this.updateSeacrh(e)} />
+                    <button>Search</button>
+                </div>
+                <table className="atas">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Authors</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
                 {postItem}
             </Fragment>
         );
@@ -41,6 +63,7 @@ class PostList extends Component {
 const mapStateToProps = (state) => {
     return {
         posts: state.Post.posts,
+        search: state.Post.search,
         authors: state.Post.authors
     }
 }

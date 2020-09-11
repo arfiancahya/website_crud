@@ -5,6 +5,7 @@ export const GET_POST_DETAIL = 'GET_POST_DETAIL';
 export const GET_POST_NEW = 'GET_POST_NEW';
 export const GET_PUT_POST = 'GET_PUT_POST';
 export const GET_POST_DELETE = 'GET_POST_DELETE';
+export const SEARCH_POST = 'SEARCH_POST';
 
 export const getPostList = () => {
     return (dispatch) => {
@@ -91,3 +92,12 @@ export const getDeletPost = (id) => {
             });
     };
 };
+
+export const searchPost = (search) => {
+    return (dispatch) => {
+        dispatch({
+            type: SEARCH_POST,
+            payload: search
+        })
+    }
+}
