@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 class PostList extends Component {
@@ -14,7 +15,7 @@ class PostList extends Component {
                                 <td>{posts.description}</td>
                                 <td>{this.props.authors}</td>
                                 <td>
-                                    <button className="edit" >Edit</button>
+                                    <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
                                     <button className="remove">Remove</button>
                                 </td>
                             </tr>

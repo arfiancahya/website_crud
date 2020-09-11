@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import { Field, reduxForm } from 'redux-form';
+import PostValidation from '../validation/PostValidation';
 
 const renderInput = (props) => (
     <input  {...props.input} type="text" />
@@ -8,11 +9,13 @@ const renderInput = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        title: state.Post.posts.title,
-        description: state.Post.posts.description,
-        authors: state.Post.authors
-    }
-}
+        initialValues: {
+            title: state.Post.posts.title,
+            description: state.Post.posts.description,
+            authors: state.Post.authors
+        }
+    };
+};
 
 
 class FormPost extends Component {
@@ -55,7 +58,8 @@ class FormPost extends Component {
 
 FormPost = reduxForm({
     form: "formCreatePost",
-    enableReinitialize: true,
+    validate: PostValidation,
+    enableReinitialize: true
 })(FormPost);
 
 export default connect(mapStateToProps, null)(FormPost);
