@@ -6,13 +6,14 @@ import PostList from '../PostList';
 class HomepagesCon extends Component {
     componentDidMount() {
         this.props.dispatch(getPostList());
+        
     }
 
     render() {
         return (
             <Fragment>
                 <h1>Hallo</h1>
-                <PostList />
+                <PostList  />
             </Fragment>
         );
     }

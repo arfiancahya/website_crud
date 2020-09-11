@@ -10,6 +10,7 @@ class EditPostCon extends Component {
         this.props.dispatch(getPostId(this.props.match.params.id));
         this.props.dispatch(deletePostId());
     }
+    
     handleSubmit(data) {
         this.props.dispatch(getEditPost(data, this.props.match.params.id));
         this.props.dispatch(deletePostId());

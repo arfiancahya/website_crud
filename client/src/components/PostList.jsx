@@ -1,9 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getDeletPost, getPostList } from '../actions/actionPost';
 
 
 class PostList extends Component {
+    handleClick(id) {
+        this.props.dispatch(getDeletPost(id));
+        this.props.dispatch(getPostList());
+    }
+
     render() {
         const postItem = this.props.posts.map(posts => {
             return (
@@ -16,7 +22,7 @@ class PostList extends Component {
                                 <td>{this.props.authors}</td>
                                 <td>
                                     <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
-                                    <button className="remove">Remove</button>
+                                    <button type="button" className="remove" onClick= {() => this.handleClick(posts.id)}>Remove</button>
                                 </td>
                             </tr>
                         </tbody>

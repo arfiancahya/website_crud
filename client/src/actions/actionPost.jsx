@@ -4,6 +4,7 @@ export const GET_POST_LIST = 'GET_POST_LIST';
 export const GET_POST_DETAIL = 'GET_POST_DETAIL';
 export const GET_POST_NEW = 'GET_POST_NEW';
 export const GET_PUT_POST = 'GET_PUT_POST';
+export const GET_POST_DELETE = 'GET_POST_DELETE';
 
 export const getPostList = () => {
     return (dispatch) => {
@@ -72,6 +73,21 @@ export const getEditPost = (data, id) => {
                         data: result.data.data
                     }
                 });
+            });
+    };
+};
+
+export const getDeletPost = (id) => {
+    return (dispatch) => {
+        axios.delete(`/api/post/${id}`)
+            .then(function (result) {
+                console.log(result);
+                // dispatch({
+                //     type: GET_POST_DELETE,
+                //     payload: {
+                //         data: result.data.data
+                //     }
+                // });
             });
     };
 };
