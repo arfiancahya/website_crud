@@ -1,6 +1,7 @@
 import { 
     GET_POST_LIST, 
-    GET_POST_DETAIL 
+    GET_POST_DETAIL, 
+    GET_POST_NEW
 } from '../actions/actionPost';
 
 const form = {
@@ -29,6 +30,12 @@ const Post = (state = initialState, action) => {
                     ...state,
                     posts: action.payload.data
                 };
+
+                case GET_POST_NEW:
+                    return {
+                        ...state,
+                        posts: action.payload.data
+                    };
 
             default:
                 return state;
