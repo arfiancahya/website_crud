@@ -106,7 +106,7 @@ class PostList extends Component {
                     <input type="search" name="search" placeholder="Search Post in Here ...." onChange={(e) => this.updateSeacrh(e)} />
                     <button>Search</button>
                 </div>
-                <table className="atas">
+                <table className="keterangan" border="1">
                     <thead>
                         <tr>
                             <th>Title</th>
