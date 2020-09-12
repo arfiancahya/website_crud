@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getDeletPost, getPostList, searchPost } from '../actions/actionPost';
@@ -6,6 +8,66 @@ import { getDeletPost, getPostList, searchPost } from '../actions/actionPost';
 
 
 class PostList extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            offset: 0,
+            posts: [],
+            orgtableData: [],
+            perPage: 10,
+            currentPage: 0
+        }
+        this.handlePageClick = this.handlePageClick.bind(this);
+    }
+
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.perPage;
+
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            this.loadMoreData()
+        });
+
+    };
+
+    loadMoreData() {
+		const data = this.state.orgtableData;
+		
+		const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage);
+		this.setState({
+			pageCount: Math.ceil(data.length / this.state.perPage),
+			posts:slice
+		})
+	
+    }
+
+    componentDidMount(){
+        this.getData();
+    }
+
+    getData() {
+        axios
+            .get(`/api/post/order`)
+            .then(res => {
+
+                const data = res.data.data;
+				
+                const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage);
+                
+
+                this.setState({
+                    pageCount: Math.ceil(data.length / this.state.perPage),
+                    orgtableData :res.data.data,
+                    posts:slice
+                })
+            });
+    }
+
     handleClick(id) {
         this.props.dispatch(getDeletPost(id));
         this.props.dispatch(getPostList());
@@ -16,7 +78,7 @@ class PostList extends Component {
     }
 
     render() {
-        let searchFilter = this.props.posts.filter((posts) => {
+        let searchFilter = this.state.posts.filter((posts) => {
             return posts.title.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
         })
         const postItem = searchFilter.map(posts => {
@@ -55,6 +117,20 @@ class PostList extends Component {
                     </thead>
                 </table>
                 {postItem}
+
+                <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
+
             </Fragment>
         );
     }

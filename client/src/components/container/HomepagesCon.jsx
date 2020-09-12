@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getPostList } from '../../actions/actionPost';
+// import { getPostList } from '../../actions/actionPost';
 import PostList from '../PostList';
 
 class HomepagesCon extends Component {
-    componentDidMount() {
-        this.props.dispatch(getPostList());
-        
-    }
+    // componentDidMount() {
+    //     this.props.dispatch(getPostList());
+    // }
 
     render() {
         return (
