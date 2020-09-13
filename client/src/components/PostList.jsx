@@ -11,7 +11,7 @@ class PostList extends Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
             offset: 0,
             posts: [],
@@ -36,17 +36,17 @@ class PostList extends Component {
     };
 
     loadMoreData() {
-		const data = this.state.orgtableData;
-		
-		const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage);
-		this.setState({
-			pageCount: Math.ceil(data.length / this.state.perPage),
-			posts:slice
-		})
-	
+        const data = this.state.orgtableData;
+
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage);
+        this.setState({
+            pageCount: Math.ceil(data.length / this.state.perPage),
+            posts: slice
+        })
+
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getData();
     }
 
@@ -56,14 +56,14 @@ class PostList extends Component {
             .then(res => {
 
                 const data = res.data.data;
-				
+
                 const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage);
-                
+
 
                 this.setState({
                     pageCount: Math.ceil(data.length / this.state.perPage),
-                    orgtableData :res.data.data,
-                    posts:slice
+                    orgtableData: res.data.data,
+                    posts: slice
                 })
             });
     }
@@ -81,42 +81,38 @@ class PostList extends Component {
         let searchFilter = this.state.posts.filter((posts) => {
             return posts.title.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1;
         })
-        const postItem = searchFilter.map(posts => {
-            return (
-                <div key={posts.id}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>{posts.title}</td>
-                                <td>{posts.description}</td>
-                                <td>{this.props.authors}</td>
-                                <td>
-                                    <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
-                                    <button type="button" className="remove" onClick={() => this.handleClick(posts.id)}>Remove</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            )
-        });
         return (
             <Fragment>
                 <div>
                     <input type="search" name="search" placeholder="Search Post in Here ...." onChange={(e) => this.updateSeacrh(e)} />
                     <button>Search</button>
                 </div>
-                <table className="keterangan" border="1">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Authors</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
-                {postItem}
+                <div >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Authors</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {searchFilter.map(posts => {
+                                return <tr key={posts.id}>
+                                    <td>{posts.title}</td>
+                                    <td>{posts.description}</td>
+                                    <td>{this.props.authors}</td>
+                                    <td>
+                                        <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
+                                        <button type="button" className="remove" onClick={() => this.handleClick(posts.id)}>Remove</button>
+                                    </td>
+                                </tr>
+                            })
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
                 <ReactPaginate
                     previousLabel={"prev"}
@@ -129,7 +125,7 @@ class PostList extends Component {
                     onPageChange={this.handlePageClick}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}/>
+                    activeClassName={"active"} />
 
             </Fragment>
         );
