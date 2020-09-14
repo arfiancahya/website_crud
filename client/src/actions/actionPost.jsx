@@ -63,6 +63,17 @@ export const getPostNew = (data) => {
     };
 };
 
+export const deletePosNew = () => {
+    return (dispatch) => {
+        dispatch({
+            type: GET_POST_NEW,
+            payload: {
+                data: false
+            }
+        });
+    };
+};
+
 export const getEditPost = (data, id) => {
     return (dispatch) => {
         axios.put(`/api/post/${id}`, data)

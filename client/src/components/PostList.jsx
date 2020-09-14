@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import './post/postList.css';
 import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getDeletPost, getPostList, searchPost } from '../actions/actionPost';
+import { getDeletPost,  searchPost } from '../actions/actionPost';
 
 
 
@@ -54,6 +55,7 @@ class PostList extends Component {
         axios
             .get(`/api/post/order`)
             .then(res => {
+                console.log(res);
 
                 const data = res.data.data;
 
@@ -70,7 +72,7 @@ class PostList extends Component {
 
     handleClick(id) {
         this.props.dispatch(getDeletPost(id));
-        this.props.dispatch(getPostList());
+        this.getData();
     }
 
     updateSeacrh(e) {
@@ -101,9 +103,10 @@ class PostList extends Component {
                             {searchFilter.map(posts => {
                                 return <tr key={posts.id}>
                                     <td>{posts.title}</td>
-                                    <td>{posts.description}</td>
+                                    <td id="limit">{posts.description}</td>
                                     <td>{this.props.authors}</td>
                                     <td>
+                                        <Link to={`detail/${posts.id}`}><button className="details">Details</button></Link>
                                         <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
                                         <button type="button" className="remove" onClick={() => this.handleClick(posts.id)}>Remove</button>
                                     </td>

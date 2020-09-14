@@ -11,7 +11,8 @@ class HomepagesCon extends Component {
     render() {
         return (
             <Fragment>
-                <h1>Hallo</h1>
+                <h1>Post List</h1>
+                <p>Dashboard - Post List</p>
                 <PostList  />
             </Fragment>
         );

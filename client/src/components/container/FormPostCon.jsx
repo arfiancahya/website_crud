@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getPostNew } from '../../actions/actionPost';
+import { deletePosNew, getPostNew } from '../../actions/actionPost';
 import FormPost from '../FormPost';
 
 class FormPostCon extends Component {
     handleSubmit(data) {
         this.props.dispatch(getPostNew(data));
+        this.props.dispatch(deletePosNew());
     }
 
     render() {
