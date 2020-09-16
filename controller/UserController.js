@@ -23,11 +23,11 @@ const daftarUser = async (req, res) => {
         const data = await User.findOne({
             where: {
                 [Op.or]: [{
-                        username: username
-                    },
-                    {
-                        email: email
-                    }
+                    username: username
+                },
+                {
+                    email: email
+                }
                 ]
             }
         });
@@ -74,11 +74,11 @@ const loginUser = async (req, res) => {
         const dataUser = await User.findOne({
             where: {
                 [Op.or]: [{
-                        username: username
-                    },
-                    {
-                        email: username
-                    }
+                    username: username
+                },
+                {
+                    email: username
+                }
                 ]
             }
         });
@@ -119,7 +119,9 @@ const loginUser = async (req, res) => {
 
 const getSingleUser = async (req, res) => {
     const user = await User.findOne({
-        id: req.id
+        where: {
+            id: req.id
+        }
     });
 
     return res.status(200).send({

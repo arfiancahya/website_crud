@@ -22,6 +22,7 @@ const createPost = async (req, res) => {
             return;
         }
 
+
         const {
             title,
             description,
@@ -34,6 +35,7 @@ const createPost = async (req, res) => {
             publish
         });
 
+        
         res.status(200).send({
             status: 200,
             message: "Post berhasil dibuat",
@@ -128,7 +130,7 @@ const orderPost = async (req, res) => {
     try {
         const id = req.params.id;
         const Order = await pos.findAll({
-             order: [
+            order: [
                 ['id', 'DESC']
             ],
         });
@@ -149,9 +151,9 @@ const getById = async (req, res) => {
     try {
         const id = req.params.id;
         const detail = await pos.findOne({
-             where: {
-                 id: id
-             }
+            where: {
+                id: id
+            }
         });
         res.status(200).send({
             status: 200,
@@ -166,6 +168,39 @@ const getById = async (req, res) => {
     }
 };
 
+// const uploadImages = async (req, res) => {
+//     try {
+//         if (req.files === null) {
+//             return res.status(400).json({ msg: "No file Uploaded" });
+//         }
+
+//         const {
+//             images
+//         } = req.files.file;
+
+//         const file = await pos.create({
+//             images
+//         });
+
+//         file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+//             if (err) {
+//                 console.error(err);
+//                 return res.status(500).send(err);
+//             }
+
+//             res.json({ fileName: file.name, filePath: `/uploads/${file.name}`, data: file });
+//         });
+
+//     } catch (error) {
+//         res.status(500).send({
+//             status: 500,
+//             message: "gagal"
+//         });
+
+//     }
+// }
+
+
 module.exports = {
     getAllPost,
     createPost,
@@ -173,5 +208,6 @@ module.exports = {
     deletePost,
     deleteAllPost,
     orderPost,
-    getById
+    getById,
+    // uploadImages
 };
