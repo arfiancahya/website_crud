@@ -40,8 +40,8 @@ const getFile = async (req, res) => {
 
 exports.downloadFile = (req, res) => {
     file.findById(req.params.id).then(file => {
-      var fileContents = Buffer.from(file.data, "base64");
-      var readStream = new stream.PassThrough();
+      const fileContents = Buffer.from(file.data, "base64");
+      const readStream = new stream.PassThrough();
       readStream.end(fileContents);
       
       res.set('Content-disposition', 'attachment; filename=' + file.name);
