@@ -9,5 +9,7 @@ router.delete("/:id", PostController.deletePost);
 router.delete("/", PostController.deleteAllPost);
 router.get("/order", PostController.orderPost);
 router.get("/:id", PostController.getById);
+// router.post("/upload", PostController.uploadImages);
+
 
 module.exports = router;
