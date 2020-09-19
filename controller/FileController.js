@@ -42,9 +42,11 @@ const uploadFile = async (req, res) => {
             __basedir + "/client/src/resources/static/assets/uploads/" + req.file.filename
           ),
         }).then((files) => {
+          const fileContents = Buffer.from(files.data, "base64");
+          console.log(fileContents);
           fs.writeFileSync(
             __basedir + "/client/src/resources/static/assets/temp/" + files.name,
-            files.data
+            fileContents
           );
     
           return res.status(200).send({
@@ -60,7 +62,7 @@ const uploadFile = async (req, res) => {
 
 const getFile = async (req, res) => {
     const fileGet = await file.findAll({
-        attributes: ['id', 'name']
+        attributes: ['id', 'name', 'data']
     });
     res.status(200).send({
         status: 200,
