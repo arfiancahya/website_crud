@@ -8,6 +8,7 @@ import { getDeletPost,  searchPost } from '../actions/actionPost';
 
 
 
+
 class PostList extends Component {
 
     constructor(props) {
@@ -55,7 +56,7 @@ class PostList extends Component {
         axios
             .get(`/api/post/order`)
             .then(res => {
-                console.log(res);
+                console.log(res.data.data);
 
                 const data = res.data.data;
 
@@ -116,6 +117,7 @@ class PostList extends Component {
                         </tbody>
                     </table>
                 </div>
+
 
                 <ReactPaginate
                     previousLabel={"prev"}

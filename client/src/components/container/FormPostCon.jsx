@@ -12,6 +12,8 @@ class FormPostCon extends Component {
     render() {
         return (
             <Fragment>
+                <h1>Create Post</h1>
+                <p>Dashboard - Create Post</p>
                 <FormPost onSubmit={(data) => this.handleSubmit(data)} />
             </Fragment>
         );

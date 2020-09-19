@@ -7,6 +7,7 @@ export const GET_PUT_POST = 'GET_PUT_POST';
 export const GET_POST_DELETE = 'GET_POST_DELETE';
 export const SEARCH_POST = 'SEARCH_POST';
 
+
 export const getPostList = () => {
     return (dispatch) => {
         axios.get("/api/post/order")

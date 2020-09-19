@@ -3,7 +3,7 @@ import {
     GET_POST_DETAIL,
     GET_POST_NEW,
     GET_PUT_POST,
-    SEARCH_POST
+    SEARCH_POST,
 } from '../actions/actionPost';
 
 
