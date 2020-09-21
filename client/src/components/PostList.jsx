@@ -107,7 +107,7 @@ class PostList extends Component {
                                     <td id="limit">{posts.description}</td>
                                     <td>{this.props.authors}</td>
                                     <td>
-                                        <Link to={`detail/${posts.id}`}><button className="details">Details</button></Link>
+                                        <Link to={`post-list/${posts.id}`}><button className="details">Details</button></Link>
                                         <Link to={`edit/${posts.id}`}><button className="edit" >Edit</button></Link>
                                         <button type="button" className="remove" onClick={() => this.handleClick(posts.id)}>Remove</button>
                                     </td>

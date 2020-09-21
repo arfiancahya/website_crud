@@ -9,6 +9,7 @@ class FormPostCon extends Component {
         this.props.dispatch(deletePosNew());
     }
 
+
     render() {
         return (
             <Fragment>

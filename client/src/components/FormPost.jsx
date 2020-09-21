@@ -42,11 +42,6 @@ class FormPost extends Component {
                         </div>
                     </div>
                     <div>
-                        <Field 
-                        name="image"
-                        component="input"
-                        type="file"
-                        />
                     </div>
                     <div>
                         <button type="submit" > Submit</button>

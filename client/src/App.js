@@ -6,6 +6,7 @@ import EditPostCon from './components/container/EditPostCon';
 import PostListCon from './components/container/PostListCon';
 import FileListCon from './components/container/FileListCon';
 import Image from './components/files/Image';
+import UploadFile from './components/files/UploadFile';
 
 
 
@@ -16,12 +17,13 @@ class App extends Component {
       <Fragment>
         <Router>
           <Switch>
-            <Route path="/" exact component={PostListCon} />
+            <Route path="/post-list" exact component={PostListCon} />
             <Route path="/create" exact component={FormPostCon} />
-            <Route path="/detail/:id" exact component={PostDetailCon} />
+            <Route path="/post-list/:id" exact component={PostDetailCon} />
             <Route path="/edit/:id" exact component={EditPostCon} />
             <Route path='/files' exact component={FileListCon} />
             <Route path='/list' exact component={Image} />
+            <Route path="/upload" exact component={UploadFile} />
           </Switch>
         </Router>
       </Fragment>

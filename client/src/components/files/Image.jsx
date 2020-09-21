@@ -18,36 +18,36 @@ class Image extends Component {
     componentDidMount() {
         this.getFile();
     }
-    
-    getFile(){
+
+    getFile() {
         fetch('/api/file/list')
-        .then((res) => res.json())
-        .then((data) => {
-            const base64Flag = 'data:image/jpg;base64,';
-            for(let i = 0; i < data.data.length; i++){
-                const read = data.data[i].data.data;
-            
-            const imageStr = this.arrayBufferToBase64(read);
-            console.log(read);
-            this.setState({
-                image: base64Flag + imageStr
+            .then((res) => res.json())
+            .then((data) => {
+                const base64Flag = 'data:image/jpg;base64,';
+                for (let i = 0; i < data.data.length; i++) {
+                    const read = data.data[i].data.data;
+                    const imageStr = this.arrayBufferToBase64(read);
+                    console.log(read);
+                    this.setState({
+                        image: base64Flag + imageStr
+                    })
+                }
             })
-            }
-        })
     }
 
+
     render() {
-        const {image} = this.state;
+        const { image } = this.state;
         return (
             <Fragment>
-            {
-                this.state.files.map(files => {
-                    return <img key={files.id} src={files.data} alt='nyoba' />
-                })
-            }
-                <img 
-                    src = {image}
-                    alt = 'Aku nih' />
+                {
+                    this.state.files.map(files => {
+                        return <img key={files.id} src={files.data} alt='nyoba' />
+                    })
+                }
+                <img
+                    src={image}
+                    alt='Aku nih' />
             </Fragment>
         );
     }

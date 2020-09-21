@@ -1,5 +1,5 @@
 import {
-    GET_FILE_LIST,
+    GET_FILE_LIST, GET_FILE_NEW,
 } from '../actions/actionFile';
 
 const initialState = {
@@ -13,6 +13,11 @@ const File = (state = initialState, action) => {
                 ...state,
                 files: action.payload.data
             };
+            case GET_FILE_NEW:
+                return {
+                    ...state,
+                    files: action.payload.data
+                };
         default:
             return state;
     }
