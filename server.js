@@ -4,6 +4,8 @@ const app = express();
 const routes = require("./routes");
 require("dotenv").config();
 
+global.__basedir = __dirname;
+
 
 //body parse
 app.use(bodyParser.json());
