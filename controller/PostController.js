@@ -22,7 +22,6 @@ const createPost = async (req, res) => {
             return;
         }
 
-
         const {
             title,
             description,
@@ -168,39 +167,6 @@ const getById = async (req, res) => {
     }
 };
 
-// const uploadImages = async (req, res) => {
-//     try {
-//         if (req.files === null) {
-//             return res.status(400).json({ msg: "No file Uploaded" });
-//         }
-
-//         const {
-//             images
-//         } = req.files.file;
-
-//         const file = await pos.create({
-//             images
-//         });
-
-//         file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
-//             if (err) {
-//                 console.error(err);
-//                 return res.status(500).send(err);
-//             }
-
-//             res.json({ fileName: file.name, filePath: `/uploads/${file.name}`, data: file });
-//         });
-
-//     } catch (error) {
-//         res.status(500).send({
-//             status: 500,
-//             message: "gagal"
-//         });
-
-//     }
-// }
-
-
 module.exports = {
     getAllPost,
     createPost,
@@ -209,5 +175,4 @@ module.exports = {
     deleteAllPost,
     orderPost,
     getById,
-    // uploadImages
 };

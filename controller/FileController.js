@@ -5,48 +5,23 @@ const fs = require('fs');
 const file = models.File;
 
 const uploadFile = async (req, res) => {
-    
-    // try {
-    //     console.log('req file: ', req.file);
-    //     const uploadFile = await file.create({
-    //         type: req.file.mimetype,
-    //         name: req.file.originalname,
-    //         data: req.file.buffer
-    //     });
-    //     res.contentType('json');
-    //     res.status(200).send({
-    //         status: 200,
-    //         message: `File uploaded Successfull! -> filename = ${req.file.originalname}`,
-    //         file: uploadFile
-    //     }); 
-
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(500).send({
-    //         status: 500,
-    //         message: "Error mulu"
-    //     });
-    // }
-
     try {
         console.log(req.file);
     
         if (req.file == undefined) {
           return res.send(`You must select a file.`);
         }
-    
+
         file.create({
           type: req.file.mimetype,
           name: req.file.originalname,
           data: fs.readFileSync(
-            __basedir + "/client/src/resources/static/assets/uploads/" + req.file.filename
+            __basedir + "/client/src/resources/static/assets/uploads/" + req.file.filename, 
           ),
         }).then((files) => {
-          const fileContents = Buffer.from(files.data, "base64");
           console.log(fileContents);
           fs.writeFileSync(
             __basedir + "/client/src/resources/static/assets/temp/" + files.name,
-            fileContents
           );
     
           return res.status(200).send({
