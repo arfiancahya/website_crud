@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   File.init({
     type: DataTypes.STRING,
     name: DataTypes.STRING,
-    data: DataTypes.BLOB('long')
+    data: DataTypes.BLOB('long'),
   }, {
     sequelize,
     modelName: 'File',
