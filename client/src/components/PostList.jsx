@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 import { getDeletPost,  searchPost } from '../actions/actionPost';
 
 
-
-
 class PostList extends Component {
 
     constructor(props) {

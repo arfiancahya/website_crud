@@ -8,6 +8,7 @@ class Image extends Component {
             files: []
         };
     };
+    
     arrayBufferToBase64(buffer) {
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(buffer));

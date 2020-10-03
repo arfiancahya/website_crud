@@ -9,8 +9,6 @@ import Image from './components/files/Image';
 import UploadFile from './components/files/UploadFile';
 
 
-
-
 class App extends Component {
   render() {
     return (
